@@ -1,0 +1,78 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+int n=4;
+int r= 3;
+
+vector<int> arr(4, 0);
+
+void combination(int depth, int next) {
+	if (depth == r) {
+		for (int i=0;i<depth;i++)
+			cout << arr[i];
+		cout << endl;
+		return;
+	}
+	for (int i = next; i <= n; i++) {
+		arr[depth] = i;
+		combination(depth + 1, i + 1);
+	}
+}
+
+void duplicatecombination(int depth, int next) {
+	if (depth == r) {
+		for (int i = 0; i < depth; i++)
+			cout << arr[i];
+		cout << endl;
+		return;
+	}
+	for (int i = next; i <= n; i++) {
+		arr[depth] = i;
+		duplicatecombination(depth + 1, i);//중복 가능이니까
+	}
+
+}
+
+vector<bool> check(n + 1, false);
+
+void permutation(int depth) {
+	if (depth == r) {
+		if (depth == r) {
+			for (int i = 0; i < depth; i++)
+				cout << arr[i];
+			cout << endl;
+			return;
+		}
+	}
+	for (int i = 1; i <= n; i++) {
+		if (!check[i]) {
+			check[i] = true;
+			arr[depth] = i;
+			permutation(depth + 1);
+			check[i] = false; // 중복거르기 위해서 true 한 뒤에 다시 false해서 다른거도 할 수 있도록 하는거
+		}
+	}
+}
+
+void duplicatepermutation(int depth) {
+	if (depth == r) {
+		if (depth == r) {
+			for (int i = 0; i < depth; i++)
+				cout << arr[i];
+			cout << endl;
+			return;
+		}
+	}
+	for (int i = 1; i <= n; i++) {
+		arr[depth] = i;
+		duplicatepermutation(depth + 1);
+	}
+}
+
+int main() {
+	combination(0, 1);
+	cout << "다음" << endl;
+	duplicatepermutation(0);
+}
